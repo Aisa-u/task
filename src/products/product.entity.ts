@@ -1,3 +1,4 @@
+import { Category } from 'src/categories/category.entity';
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm'
 
 @Entity()
@@ -14,6 +15,10 @@ export class Product {
     @Column()
     price: number
 
+    @ManyToOne(() => Category, (category) => category.products)
+    @JoinColumn({ name: "categoryId" })
+    category: Category;
+
     @Column()
     image: string;
 
@@ -25,4 +30,5 @@ export class Product {
 
     @DeleteDateColumn()
     deletedAt: Date
+    
 }
