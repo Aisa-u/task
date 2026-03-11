@@ -5,10 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoriesModule } from './categories/categories.module';
 import { ProductsModule } from './products/products.module';
 import { FilesModule } from './files/files.module';
+import { ExcelModule } from './excel/excel.module';
 import { join } from 'path';
 
 @Module({
-  
   imports: [
     ConfigModule.forRoot( { isGlobal: true } ),
     TypeOrmModule.forRootAsync({
@@ -30,10 +30,11 @@ import { join } from 'path';
       rootPath: join(__dirname, 'static'),
     }),
 
-    CategoriesModule, 
+    CategoriesModule,
     ProductsModule,
-    FilesModule
-  ],
+    FilesModule,
+    ExcelModule,
 
+  ],
 })
 export class AppModule {}
