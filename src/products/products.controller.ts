@@ -5,7 +5,6 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from 'src/dto/create-product.dto';
 import { UpdateProductDto } from 'src/dto/update-product.dto';
 
-@ApiTags("Товары")
 @Controller('products')
 export class ProductsController {
   constructor(
