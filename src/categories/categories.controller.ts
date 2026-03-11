@@ -1,13 +1,41 @@
 import { Controller, Get, Post, Put, Patch, Delete, Param, Body, Res } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from '../dto/create-category.dto';
-import { UpdateCategoryDto } from '../dto/update-category.dto';
+import { UpdateCategoryDto } from 'src/dto/update-category.dto';
+import { ExcelService } from 'src/excel/excel.service';
+import * as express from 'express'
 
 @Controller('categories')
 export class CategoriesController {
   constructor(
-    private readonly categoriesService: CategoriesService, 
+    private readonly categoriesService: CategoriesService,
+    private excelService: ExcelService 
   ) {}
+
+  //EXPORT
+  @Get('export')
+  async exportCategories(@Res() res: express.Response) {
+
+    const categories = await this.categoriesService.getAllCategories()
+
+    const workbook = await this.excelService.exportCategories(categories)
+
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+
+    res.setHeader(
+      'Content-Disposition',
+      'attachment; filename=categories.xlsx'
+    )
+
+    await workbook.xlsx.write(res)
+
+    res.end()
+
+    return true
+  }
 
   //GET
   @Get('all')
