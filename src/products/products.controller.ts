@@ -4,12 +4,38 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from 'src/dto/create-product.dto';
 import { UpdateProductDto } from 'src/dto/update-product.dto';
+import { ExcelService } from 'src/excel/excel.service';
+import * as express from 'express'
+
 
 @Controller('products')
 export class ProductsController {
   constructor(
     private readonly productsService: ProductsService,
+    private excelService: ExcelService
   ) {}
+
+  //EXPORT
+  @Get('export')
+  async exportProducts(@Res() res: express.Response) {
+    const products = await this.productsService.getAllProducts()
+  
+    const workbook = await this.excelService.exportProducts(products)
+
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+
+    res.setHeader(
+      'Content-Disposition',
+      'attachment; filename=products.xlsx'
+    )
+
+    await workbook.xlsx.write(res)
+
+    res.end()
+  }
 
   //GET ALL
   @Get('all')
