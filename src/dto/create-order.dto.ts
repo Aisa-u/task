@@ -1,6 +1,4 @@
-import { IsString, IsEnum, IsNumber } from "class-validator";
-import { OrderStatus } from "src/entities/order.entity";
-import { CreateOrderItemDto } from "./create-order-item.dto";
+import { IsString, IsNumber, IsInt, Min } from "class-validator";
 
 export class CreateOrderDto {
     date: string
@@ -12,5 +10,16 @@ export class CreateOrderDto {
     cName: string
 
     items: CreateOrderItemDto[]
+
+}
+
+export class CreateOrderItemDto {
+
+    @IsInt()
+    productId: number
+
+    @IsInt()
+    @Min(1)
+    quantity: number
 
 }
