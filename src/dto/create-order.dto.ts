@@ -1,8 +1,8 @@
 import { IsString, IsEnum, IsNumber } from "class-validator";
-import { OrderItem } from "src/entities/order-item.entity";
 import { OrderStatus } from "src/entities/order.entity";
+import { CreateOrderItemDto } from "./create-order-item.dto";
 
-export class Order {
+export class CreateOrderDto {
     date: string
     
     @IsNumber()
@@ -14,6 +14,6 @@ export class Order {
     @IsEnum(OrderStatus)
     status: OrderStatus
 
-    items: OrderItem[]
+    items: CreateOrderItemDto[]
 
 }
