@@ -35,15 +35,21 @@ export class ProductsService {
     }
     
     async createProduct(dto: CreateProductDto, image: any) {
+        const createData: any = { ...dto };
+
+        if (dto.categoryId !== undefined) {
+            createData.category = { id: dto.categoryId };
+        }
+
         const fileName = await this.fileService.createFile(image)
-        const product = this.productRepository.create({...dto, category: { id: dto.categoryId }, image: fileName});
+
+        const product = this.productRepository.create({...createData, image: fileName});
 
         return this.productRepository.save(product);
     }
 
     async updateProduct(id: number, dto: UpdateProductDto) {
-   
-        const updateData: any = { ...dto };
+        const updateData: any = { ...dto }
 
         if (dto.categoryId !== undefined) {
             updateData.category = { id: dto.categoryId };
