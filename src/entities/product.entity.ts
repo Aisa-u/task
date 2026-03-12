@@ -1,7 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm'
-import { Category } from 'src/categories/category.entity';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm'
+import { Category } from 'src/entities/category.entity';
 import { ApiProperty } from '@nestjs/swagger';
-import { Order } from 'src/orders/order.entity';
+import { OrderItem } from 'src/entities/order-item.entity';
 
 @Entity()
 export class Product {
@@ -21,10 +21,6 @@ export class Product {
     @Column()
     price: number
 
-    @ManyToOne(() => Category, (category) => category.products)
-    @JoinColumn({ name: "categoryId" })
-    category: Category;
-
     @ApiProperty({example: "", description: "Ссылка к фото"})
     @Column()
     image: string;
@@ -38,6 +34,10 @@ export class Product {
     @DeleteDateColumn()
     deletedAt: Date
 
-    @ManyToOne(() => Order, (orders) => orders.order_details.products_id)
-    orders: Order[]
+    @OneToMany(() => OrderItem, (item) => item.product)
+    orderItems: OrderItem[]
+
+    @ManyToOne(() => Category, (category) => category.products)
+    @JoinColumn({ name: "categoryId" })
+    category: Category;
 }

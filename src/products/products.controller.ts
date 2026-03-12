@@ -5,7 +5,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from 'src/dto/create-product.dto';
 import { UpdateProductDto } from 'src/dto/update-product.dto';
-import { Product } from './product.entity';
+import { Product } from '../entities/product.entity';
 import { ExcelService } from 'src/excel/excel.service';
 import * as express from 'express'
 

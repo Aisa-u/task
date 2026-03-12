@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as ExcelJs from 'exceljs'
-import { Category } from 'src/categories/category.entity';
-import { Product } from 'src/products/product.entity';
+import { Category } from 'src/entities/category.entity';
+import { Product } from 'src/entities/product.entity';
 
 @Injectable()
 export class ExcelService {

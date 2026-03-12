@@ -3,7 +3,7 @@ import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from '../dto/create-category.dto';
 import { UpdateCategoryDto } from 'src/dto/update-category.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Category } from './category.entity';
+import { Category } from '../entities/category.entity';
 import { ExcelService } from 'src/excel/excel.service';
 import * as express from 'express'
 
