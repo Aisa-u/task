@@ -7,6 +7,12 @@ import { CreateOrderDto } from 'src/dto/create-order.dto';
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
+  //GET
+  @Get('all')
+  async getAllOrders() {
+    return this.ordersService.getAllOrders()
+  }
+
   //POST
   @Post()
   async createOrder(@Body() dto: CreateOrderDto) {

@@ -11,8 +11,18 @@ export class OrdersService {
     constructor(
         @InjectRepository(Order)
         private orderRepository: Repository<Order>,
+
+        @InjectDataSource()
         private dataSource: DataSource
     ) {}
+
+    async getAllOrders() {
+        return await this.orderRepository.find({
+            relations: {
+                orderItems: true
+            }
+        })
+    }
 
     async createOrder(dto: CreateOrderDto) {
         return await this.dataSource.transaction(async (manager) => {
