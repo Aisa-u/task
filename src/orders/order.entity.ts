@@ -1,5 +1,5 @@
 import { Product } from 'src/products/product.entity'
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm'
 
 export enum OrderStatus {
     PLACED = 'order placed',
@@ -10,6 +10,7 @@ export enum OrderStatus {
 
 @Entity()
 export class Order {
+    
     @PrimaryGeneratedColumn()
     id: number
 
@@ -28,7 +29,10 @@ export class Order {
     })
     status: OrderStatus
 
-    @ManyToMany(() => Product, (products) => products.orders)
+    @ManyToMany(() => Product, (products) => products.orders, { 
+        cascade: true 
+    })
+    @JoinTable()
     @Column({ type: 'simple-json' })
     order_details: {
         products_id: number[],
