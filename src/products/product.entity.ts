@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm'
 import { Category } from 'src/categories/category.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { Order } from 'src/orders/order.entity';
 
 @Entity()
 export class Product {
@@ -36,4 +37,7 @@ export class Product {
 
     @DeleteDateColumn()
     deletedAt: Date
+
+    @ManyToOne(() => Order, (orders) => orders.order_details.products_id)
+    orders: Order[]
 }

@@ -1,3 +1,4 @@
+import { Product } from 'src/products/product.entity'
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm'
 
 export enum OrderStatus {
@@ -27,5 +28,11 @@ export class Order {
     })
     status: OrderStatus
 
+    @ManyToMany(() => Product, (products) => products.orders)
+    @Column({ type: 'simple-json' })
+    order_details: {
+        products_id: number[],
+        quantity: number
+    }
 
 }
