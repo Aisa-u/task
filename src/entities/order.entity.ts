@@ -29,7 +29,7 @@ export class Order {
     })
     status: OrderStatus
 
-    @OneToMany(() => (OrderItem), (item) => item.orderId, { 
+    @OneToMany(() => (OrderItem), (item) => item.order, { 
         cascade: true 
     })
     orderItems: OrderItem[]

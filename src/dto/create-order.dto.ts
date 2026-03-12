@@ -11,9 +11,6 @@ export class CreateOrderDto {
     @IsString()
     cName: string
 
-    @IsEnum(OrderStatus)
-    status: OrderStatus
-
     items: CreateOrderItemDto[]
 
 }

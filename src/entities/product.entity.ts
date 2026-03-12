@@ -34,7 +34,7 @@ export class Product {
     @DeleteDateColumn()
     deletedAt: Date
 
-    @OneToMany(() => OrderItem, (item) => item.productId)
+    @OneToMany(() => OrderItem, (item) => item.product)
     orderItems: OrderItem[]
 
     @ManyToOne(() => Category, (category) => category.products)
