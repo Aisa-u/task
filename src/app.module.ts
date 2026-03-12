@@ -7,6 +7,7 @@ import { ProductsModule } from './products/products.module';
 import { FilesModule } from './files/files.module';
 import { ExcelModule } from './excel/excel.module';
 import { join } from 'path';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { join } from 'path';
     ProductsModule,
     FilesModule,
     ExcelModule,
+    OrdersModule,
 
   ],
 })
