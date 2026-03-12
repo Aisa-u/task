@@ -12,9 +12,9 @@ export class OrderItem {
     quantity: number
 
     @ManyToOne(() => Order, (order) => order.orderItems)
-    order: Order
+    orderId: Order
 
     @ManyToOne(() => Product, (product) => product.orderItems)
-    product: Product[]
+    productId: Product
 
 }
