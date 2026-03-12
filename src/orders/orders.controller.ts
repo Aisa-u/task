@@ -13,6 +13,13 @@ export class OrdersController {
     return this.ordersService.getAllOrders()
   }
 
+  //GET BY ID
+  @Get(':id')
+  async getOrderById(@Param('id') id: string) {
+    return this.ordersService.getOrderById(+id)
+  }
+
+
   //POST
   @Post()
   async createOrder(@Body() dto: CreateOrderDto) {
