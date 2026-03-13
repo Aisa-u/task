@@ -21,7 +21,7 @@ export class Product {
     @Column()
     price: number
 
-    @ApiProperty({example: "", description: "Ссылка к фото"})
+    @ApiProperty({example: "3bcbcfd7-9095-4c91-b461-715563c2a092.jpg", description: "Ссылка к фото"})
     @Column()
     image: string;
 
@@ -34,7 +34,7 @@ export class Product {
     @DeleteDateColumn()
     deletedAt: Date
 
-    @OneToMany(() => OrderItem, (item) => item.product, {
+    @OneToMany(() => OrderItem, (orderItem) => orderItem.product, {
         cascade: true
     })
     orderItems: OrderItem[]
