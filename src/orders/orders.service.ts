@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateOrderDto } from 'src/dto/create-order.dto';
 import { OrderItem } from 'src/entities/order-item.entity';
 import { Order, OrderStatus } from 'src/entities/order.entity';
-import { DataSource, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
+import { Transactional } from 'typeorm-transactional';
 
 @Injectable()
 export class OrdersService {
@@ -12,8 +13,9 @@ export class OrdersService {
         @InjectRepository(Order)
         private orderRepository: Repository<Order>,
 
-        @InjectDataSource()
-        private dataSource: DataSource
+        @InjectRepository(OrderItem)
+        private orderItemRepository: Repository<OrderItem>,
+    
     ) {}
 
     async getAllOrders() {
@@ -34,30 +36,30 @@ export class OrdersService {
         return order;
     }
 
-    async createOrder(dto: CreateOrderDto) {
-        return await this.dataSource.transaction(async (manager) => {
+    @Transactional()
+    async createOrder(dto: CreateOrderDto): Promise<Order> {
 
-            const order = manager.create(Order, {
-                ...dto,
-                status: OrderStatus.PLACED
-            })
-
-            await manager.save(order)
-
-            const orderItems = dto.items.map(item =>
-                manager.create(OrderItem, {
-                    order,
-                    product: { id: item.productId },
-                    quantity: item.quantity
-                })
-            )
-
-            await manager.save(orderItems)
-
-            return order
-            
+        const order = this.orderRepository.create({
+            date: dto.date,
+            discount: dto.discount,
+            cName: dto.cName,
+            status: OrderStatus.PLACED
         })
 
-    }
+        await this.orderRepository.save(order)
 
+        const orderItems = dto.orderItems.map((item) =>
+            this.orderItemRepository.create({
+                order: { id: order.id },
+                product: { id: item.productId },
+                quantity: item.quantity
+            })
+        )
+
+        await this.orderItemRepository.save(orderItems)
+
+        await this.orderRepository.save(order)
+
+        return order
+    }
 }
