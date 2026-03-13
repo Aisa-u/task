@@ -58,10 +58,37 @@ export class OrdersService {
 		await this.orderItemRepository.save(orderItems)
 
 		return order
-	}
+  }
+  
+  @Transactional()
+  async updateOrder(id: number, dto: UpdateOrderDto): Promise<Order> {
 
-    @Transactional()
-    async updateOrder(id: number, dto: UpdateOrderDto): Promise<Order> {
+    const order = await this.getOrderById(id)
+
+    order.date = dto.date
+    order.discount = dto.discount
+		order.cName = dto.cName
+		order.status = dto.status
+
+    await this.orderRepository.save(order)
+
+    await this.orderItemRepository.delete({ order: { id: order.id } })
+
+    const orderItems = dto.orderItems.map((item) => 
+      this.orderItemRepository.create({
+        order: { id: order.id },
+        product: { id: item.productId },
+        quantity: item.quantity
+      })
+    )
+
+    await this.orderItemRepository.save(orderItems)
+
+    return order
+  }
+
+  @Transactional()
+  async patchUpdateOrder(id: number, dto: UpdateOrderDto): Promise<Order> {
 
 		const order = await this.getOrderById(id)
 

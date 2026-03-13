@@ -1,5 +1,5 @@
 import { Controller, Res } from '@nestjs/common';
-import { Get, Post, Patch, Delete, Param, Body} from '@nestjs/common';
+import { Get, Post, Put, Patch, Delete, Param, Body} from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from 'src/dto/create-order.dto';
 import { UpdateOrderDto } from 'src/dto/update-order.dto';
@@ -61,12 +61,20 @@ export class OrdersController {
     return await this.ordersService.createOrder(dto)
   }
 
-  //PATCH
-  @ApiOperation({summary: "Изменить заказ по id"})
-  @ApiResponse({status: 200, type: Order})
-  @Patch(':id')
+  //PUT
+  @ApiOperation({ summary: "Полностью изменить заказ" })
+  @ApiResponse({ status: 200, type: Order })
+  @Put(':id')
   async updateOrder(@Param('id') id: string, @Body() dto: UpdateOrderDto) {
     return await this.ordersService.updateOrder(+id, dto)
+  }
+
+  //PATCH
+  @ApiOperation({summary: "Изменить заказ частично"})
+  @ApiResponse({status: 200, type: Order})
+  @Patch(':id')
+  async patchUpdateOrder(@Param('id') id: string, @Body() dto: UpdateOrderDto) {
+    return await this.ordersService.patchUpdateOrder(+id, dto)
   }
 
   //DELETE

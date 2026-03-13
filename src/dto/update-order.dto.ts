@@ -1,7 +1,15 @@
-import { IsEnum, IsInt, Min } from "class-validator"
+import { IsEnum, IsInt, IsNumber, IsString, Min } from "class-validator"
 import { OrderStatus } from "src/entities/order.entity"
 
 export class UpdateOrderDto {
+
+    date: string
+        
+    @IsNumber()
+    discount: number
+    
+    @IsString()
+    cName: string
 
     @IsEnum(OrderStatus)
     status: OrderStatus
