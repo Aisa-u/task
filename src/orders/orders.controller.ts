@@ -32,4 +32,10 @@ export class OrdersController {
     return await this.ordersService.updateOrder(+id, dto)
   }
 
+  //DELETE
+  @Delete('delete/:id')
+  async deleteOrder(@Param('id') id: string) {
+    return await this.ordersService.deleteOrder(+id)
+  }
+
 }

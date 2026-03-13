@@ -74,7 +74,7 @@ export class OrdersService {
         await this.orderRepository.save(order)
 
         if(dto.orderItems) {
-            await this.orderItemRepository.delete({ order: { id: order.id } });
+            await this.orderItemRepository.delete({ order: { id: order.id } })
 
             const orderItems = dto.orderItems.map((item) =>
                 this.orderItemRepository.create({
@@ -90,4 +90,10 @@ export class OrdersService {
         return order
 
     }
+
+    async deleteOrder(id: number) {
+        await this.orderItemRepository.delete({ order: { id: id } });
+        return await this.orderRepository.delete(id)
+    }
+
 }
