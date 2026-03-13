@@ -26,4 +26,10 @@ export class OrdersController {
     return await this.ordersService.createOrder(dto)
   }
 
+  //PATCH
+  @Patch(':id')
+  async updateOrder(@Param('id') id: string, @Body() dto: UpdateOrderDto) {
+    return await this.ordersService.updateOrder(+id, dto)
+  }
+
 }
