@@ -1,25 +1,22 @@
-import { IsString, IsNumber, IsInt, Min } from "class-validator";
+import { IsString, IsNumber, IsInt, Min } from 'class-validator'
 
 export class CreateOrderDto {
-    date: string
-    
-    @IsNumber()
-    discount: number
+  date: string
 
-    @IsString()
-    cName: string
+  @IsNumber()
+  discount: number
 
-    orderItems: CreateOrderItemDto[]
+  @IsString()
+  cName: string
 
+  orderItems: CreateOrderItemDto[]
 }
 
 export class CreateOrderItemDto {
+  @IsInt()
+  productId: number
 
-    @IsInt()
-    productId: number
-
-    @IsInt()
-    @Min(1)
-    quantity: number
-
+  @IsInt()
+  @Min(1)
+  quantity: number
 }

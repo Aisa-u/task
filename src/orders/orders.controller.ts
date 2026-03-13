@@ -1,14 +1,14 @@
-import { Controller, Res } from '@nestjs/common';
-import { Get, Post, Put, Patch, Delete, Param, Body} from '@nestjs/common';
-import { OrdersService } from './orders.service';
-import { CreateOrderDto } from 'src/orders/dto/create-order.dto';
-import { UpdateOrderDto } from 'src/orders/dto/update-order.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Order } from 'src/orders/entities/order.entity';
-import { ExcelService } from 'src/excel/excel.service';
+import { Controller, Res } from '@nestjs/common'
+import { Get, Post, Put, Patch, Delete, Param, Body } from '@nestjs/common'
+import { OrdersService } from './orders.service'
+import { CreateOrderDto } from 'src/orders/dto/create-order.dto'
+import { UpdateOrderDto } from 'src/orders/dto/update-order.dto'
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { Order } from 'src/orders/entities/order.entity'
+import { ExcelService } from 'src/excel/excel.service'
 import * as express from 'express'
 
-@ApiTags("Заказы")
+@ApiTags('Заказы')
 @Controller('orders')
 export class OrdersController {
   constructor(
@@ -16,7 +16,7 @@ export class OrdersController {
     private excelService: ExcelService
   ) {}
 
-  @ApiOperation({summary: "Экспорт в Excel"})
+  @ApiOperation({ summary: 'Экспорт в Excel' })
   @Get('export')
   async exportOrders(@Res() res: express.Response) {
     const orders = await this.ordersService.getAllOrders()
@@ -27,10 +27,7 @@ export class OrdersController {
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
-    res.setHeader(
-      'Content-Disposition',
-      'attachment; filename=orders.xlsx'
-    )
+    res.setHeader('Content-Disposition', 'attachment; filename=orders.xlsx')
 
     await workbook.xlsx.write(res)
 
@@ -38,31 +35,31 @@ export class OrdersController {
   }
 
   //GET
-  @ApiOperation({summary: "Получить все заказы"})
-  @ApiResponse({status: 200, type: Order})
+  @ApiOperation({ summary: 'Получить все заказы' })
+  @ApiResponse({ status: 200, type: Order })
   @Get('all')
   async getAllOrders() {
     return await this.ordersService.getAllOrders()
   }
 
   //GET BY ID
-  @ApiOperation({summary: "Получить заказ по id"})
-  @ApiResponse({status: 200, type: Order})
+  @ApiOperation({ summary: 'Получить заказ по id' })
+  @ApiResponse({ status: 200, type: Order })
   @Get(':id')
   async getOrderById(@Param('id') id: string) {
     return await this.ordersService.getOrderById(+id)
   }
 
   //POST
-  @ApiOperation({summary: "Создать новый заказ"})
-  @ApiResponse({status: 200, type: Order})
+  @ApiOperation({ summary: 'Создать новый заказ' })
+  @ApiResponse({ status: 200, type: Order })
   @Post()
   async createOrder(@Body() dto: CreateOrderDto) {
     return await this.ordersService.createOrder(dto)
   }
 
   //PUT
-  @ApiOperation({ summary: "Полностью изменить заказ" })
+  @ApiOperation({ summary: 'Полностью изменить заказ' })
   @ApiResponse({ status: 200, type: Order })
   @Put(':id')
   async updateOrder(@Param('id') id: string, @Body() dto: UpdateOrderDto) {
@@ -70,19 +67,18 @@ export class OrdersController {
   }
 
   //PATCH
-  @ApiOperation({summary: "Изменить заказ частично"})
-  @ApiResponse({status: 200, type: Order})
+  @ApiOperation({ summary: 'Изменить заказ частично' })
+  @ApiResponse({ status: 200, type: Order })
   @Patch(':id')
   async patchUpdateOrder(@Param('id') id: string, @Body() dto: UpdateOrderDto) {
     return await this.ordersService.patchUpdateOrder(+id, dto)
   }
 
   //DELETE
-  @ApiOperation({summary: "Удалить заказ по id"})
-  @ApiResponse({status: 200, type: Order})
+  @ApiOperation({ summary: 'Удалить заказ по id' })
+  @ApiResponse({ status: 200, type: Order })
   @Delete('delete/:id')
   async deleteOrder(@Param('id') id: string) {
     return await this.ordersService.deleteOrder(+id)
   }
-
 }

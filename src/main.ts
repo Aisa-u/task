@@ -1,25 +1,24 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { initializeTransactionalContext } from 'typeorm-transactional';
+import { NestFactory } from '@nestjs/core'
+import { AppModule } from './app.module'
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { initializeTransactionalContext } from 'typeorm-transactional'
 
 async function bootstrap() {
-  
-  initializeTransactionalContext();
+  initializeTransactionalContext()
 
   const PORT = process.env.PORT ?? 3000
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule)
 
   const config = new DocumentBuilder()
-    .setTitle("Title")
-    .setDescription("API documentation")
+    .setTitle('Title')
+    .setDescription('API documentation')
     .setVersion('1.0.0')
     .build()
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('/api/docs', app, document);
+  const document = SwaggerModule.createDocument(app, config)
+  SwaggerModule.setup('/api/docs', app, document)
 
   await app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
 }
 
-bootstrap();
+bootstrap()
