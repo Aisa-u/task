@@ -8,6 +8,8 @@ import { FilesModule } from './files/files.module';
 import { ExcelModule } from './excel/excel.module';
 import { join } from 'path';
 import { OrdersModule } from './orders/orders.module';
+import { addTransactionalDataSource } from 'typeorm-transactional';
+import { DataSource } from 'typeorm';
 
 @Module({
   imports: [
@@ -24,7 +26,14 @@ import { OrdersModule } from './orders/orders.module';
         autoLoadEntities: true,
         synchronize: true,
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
+      async dataSourceFactory(options) {
+	       if (!options) {
+	         throw new Error('Invalid options passed');
+	       }
+
+	       return addTransactionalDataSource(new DataSource(options));
+	     },
     }),
 
     ServeStaticModule.forRoot({
