@@ -3,7 +3,7 @@ import { OrderItem } from './order-item.entity'
 
 export enum OrderStatus {
     PLACED = 'order placed',
-    PROCCES = 'proccessing',
+    PROCESS = 'processing',
     DELIVERED = "delivered",
     CANCEL = 'cancelled'
 }

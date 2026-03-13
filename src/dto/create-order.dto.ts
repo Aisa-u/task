@@ -9,7 +9,7 @@ export class CreateOrderDto {
     @IsString()
     cName: string
 
-    items: CreateOrderItemDto[]
+    orderItems: CreateOrderItemDto[]
 
 }
 
