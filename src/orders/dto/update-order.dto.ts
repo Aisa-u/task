@@ -1,5 +1,5 @@
 import { IsEnum, IsInt, IsNumber, IsString, Min } from "class-validator"
-import { OrderStatus } from "src/entities/order.entity"
+import { OrderStatus } from "src/orders/entities/order.entity"
 
 export class UpdateOrderDto {
 

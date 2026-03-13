@@ -1,10 +1,10 @@
 import { Controller, Res } from '@nestjs/common';
 import { Get, Post, Put, Patch, Delete, Param, Body} from '@nestjs/common';
 import { OrdersService } from './orders.service';
-import { CreateOrderDto } from 'src/dto/create-order.dto';
-import { UpdateOrderDto } from 'src/dto/update-order.dto';
+import { CreateOrderDto } from 'src/orders/dto/create-order.dto';
+import { UpdateOrderDto } from 'src/orders/dto/update-order.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Order } from 'src/entities/order.entity';
+import { Order } from 'src/orders/entities/order.entity';
 import { ExcelService } from 'src/excel/excel.service';
 import * as express from 'express'
 

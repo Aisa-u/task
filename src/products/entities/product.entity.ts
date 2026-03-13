@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm'
-import { Category } from 'src/entities/category.entity';
+import { Category } from 'src/categories/entities/category.entity';
 import { ApiProperty } from '@nestjs/swagger';
-import { OrderItem } from 'src/entities/order-item.entity';
+import { OrderItem } from 'src/orders/entities/order-item.entity';
 
 @Entity()
 export class Product {

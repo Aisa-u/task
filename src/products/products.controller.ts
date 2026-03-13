@@ -3,9 +3,9 @@ import { Get, Post, Put, Patch, Delete, Param, Body, Res} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ProductsService } from './products.service';
-import { CreateProductDto } from 'src/dto/create-product.dto';
-import { UpdateProductDto } from 'src/dto/update-product.dto';
-import { Product } from '../entities/product.entity';
+import { CreateProductDto } from 'src/products/dto/create-product.dto';
+import { UpdateProductDto } from 'src/products/dto/update-product.dto';
+import { Product } from './entities/product.entity';
 import { ExcelService } from 'src/excel/excel.service';
 import * as express from 'express'
 
