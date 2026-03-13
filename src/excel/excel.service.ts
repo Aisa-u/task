@@ -63,7 +63,7 @@ export class ExcelService {
       { header: 'Discount', key: 'discount', width: 10 },
       { header: 'Product Name', key: 'product', width: 15 },
       { header: 'Quantity', key: 'quantity' },
-      { header: 'Order Status', key: 'status', width: 15 },
+      { header: 'Order Status', key: 'status', width: 15 }
     ]
 
     orders.forEach((order) => {
