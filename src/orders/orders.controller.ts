@@ -2,6 +2,7 @@ import { Controller } from '@nestjs/common';
 import { Get, Post, Put, Patch, Delete, Param, Body, Res} from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from 'src/dto/create-order.dto';
+import { UpdateOrderDto } from 'src/dto/update-order.dto';
 
 @Controller('orders')
 export class OrdersController {
@@ -10,15 +11,14 @@ export class OrdersController {
   //GET
   @Get('all')
   async getAllOrders() {
-    return this.ordersService.getAllOrders()
+    return await this.ordersService.getAllOrders()
   }
 
   //GET BY ID
   @Get(':id')
   async getOrderById(@Param('id') id: string) {
-    return this.ordersService.getOrderById(+id)
+    return await this.ordersService.getOrderById(+id)
   }
-
 
   //POST
   @Post()
