@@ -1,15 +1,41 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Res } from '@nestjs/common';
 import { Get, Post, Patch, Delete, Param, Body} from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from 'src/dto/create-order.dto';
 import { UpdateOrderDto } from 'src/dto/update-order.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Order } from 'src/entities/order.entity';
+import { ExcelService } from 'src/excel/excel.service';
+import * as express from 'express'
 
 @ApiTags("Заказы")
 @Controller('orders')
 export class OrdersController {
-  constructor(private readonly ordersService: OrdersService) {}
+  constructor(
+    private readonly ordersService: OrdersService,
+    private excelService: ExcelService
+  ) {}
+
+  @ApiOperation({summary: "Экспорт в Excel"})
+  @Get('export')
+  async exportOrders(@Res() res: express.Response) {
+    const orders = await this.ordersService.getAllOrders()
+    const workbook = await this.excelService.exportOrders(orders)
+
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+
+    res.setHeader(
+      'Content-Disposition',
+      'attachment; filename=orders.xlsx'
+    )
+
+    await workbook.xlsx.write(res)
+
+    res.end()
+  }
 
   //GET
   @ApiOperation({summary: "Получить все заказы"})

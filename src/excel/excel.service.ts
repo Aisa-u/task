@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as ExcelJs from 'exceljs'
 import { Category } from 'src/entities/category.entity';
+import { Order } from 'src/entities/order.entity';
 import { Product } from 'src/entities/product.entity';
 
 @Injectable()
@@ -45,6 +46,38 @@ export class ExcelService {
                 id: category.id,
                 name: category.name,
                 description: category.description
+            })
+        })
+
+        return workbook
+    }
+
+    async exportOrders(orders: Order[]) {
+        const workbook = new ExcelJs.Workbook()
+        const worksheet = workbook.addWorksheet("Orders")
+
+        worksheet.columns = [
+            { header: 'Id', key: 'id', width: 10 },
+            { header: 'Customer Name', key: 'cName', width: 15 },
+            { header: 'Date', key: 'date', width: 15 },
+            { header: 'Discount', key: 'discount', width: 10 },
+            { header: 'Product Name', key: 'product', width: 15 },
+            { header: 'Quantity', key: 'quantity' },
+            { header: 'Order Status', key: 'status', width: 15 },
+            { header: 'e', key: 'e' }
+        ]
+
+        orders.forEach(order => {
+            order.orderItems.forEach(item => {
+                worksheet.addRow({
+                    id: order.id,
+                    cName: order.cName,
+                    date: order.date,
+                    discount: order.discount,
+                    product: item.product?.name,
+                    quantity: item.quantity,
+                    status: order.status
+                })
             })
         })
 
