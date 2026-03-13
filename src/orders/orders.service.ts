@@ -21,9 +21,7 @@ export class OrdersService {
 
     async getAllOrders() {
         return await this.orderRepository.find({
-            relations: {
-                orderItems: true
-            }
+            relations: ['orderItems', 'orderItems.product']
         })
     }
 

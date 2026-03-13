@@ -17,7 +17,8 @@ export class ProductsService {
     async getAllProducts() {
         const products = await this.productRepository.find({
             relations: {
-                category: true
+                category: true,
+                orderItems: true
             }
         })
 
