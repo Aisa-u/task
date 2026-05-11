@@ -20,7 +20,7 @@ export class OrdersController {
   @Get('export')
   async exportOrders(@Res() res: express.Response) {
     const orders = await this.ordersService.getAllOrders()
-    const workbook = await this.excelService.exportOrders(orders)
+    const workbook = this.excelService.exportOrders(orders)
 
     res.setHeader(
       'Content-Type',

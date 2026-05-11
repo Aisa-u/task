@@ -35,14 +35,14 @@ export class ProductsService {
     return product
   }
 
-  async createProduct(dto: CreateProductDto, image: any) {
-    const createData: any = { ...dto }
+  async createProduct(dto: CreateProductDto, image: { buffer: Buffer }) {
+    const createData: Record<string, unknown> = { ...dto }
 
     if (dto.categoryId !== undefined) {
       createData.category = { id: dto.categoryId }
     }
 
-    const fileName = await this.fileService.createFile(image)
+    const fileName = this.fileService.createFile(image)
 
     const product = this.productRepository.create({
       ...createData,
@@ -53,20 +53,22 @@ export class ProductsService {
   }
 
   async updateProduct(id: number, dto: UpdateProductDto) {
-    const updateData: any = { ...dto }
+    const { categoryId, ...rest } = dto
+    const updateData = { ...rest } as Record<string, unknown>
 
-    if (dto.categoryId !== undefined) {
-      updateData.category = { id: dto.categoryId }
+    if (categoryId !== undefined) {
+      updateData.category = { id: categoryId }
     }
 
     return await this.productRepository.update(id, updateData)
   }
 
   async patchUpdateProduct(id: number, dto: Partial<UpdateProductDto>) {
-    const updateData: any = { ...dto }
+    const { categoryId, ...rest } = dto
+    const updateData = { ...rest } as Record<string, unknown>
 
-    if (dto.categoryId !== undefined) {
-      updateData.category = { id: dto.categoryId }
+    if (categoryId !== undefined) {
+      updateData.category = { id: categoryId }
     }
 
     return await this.productRepository.update(id, updateData)

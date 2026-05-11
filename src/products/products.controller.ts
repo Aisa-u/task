@@ -23,7 +23,7 @@ export class ProductsController {
   async exportProducts(@Res() res: express.Response) {
     const products = await this.productsService.getAllProducts()
 
-    const workbook = await this.excelService.exportProducts(products)
+    const workbook = this.excelService.exportProducts(products)
 
     res.setHeader(
       'Content-Type',
@@ -58,7 +58,10 @@ export class ProductsController {
   @ApiResponse({ status: 200, type: Product })
   @Post()
   @UseInterceptors(FileInterceptor('image'))
-  async createProduct(@Body() dto: CreateProductDto, @UploadedFile() image) {
+  async createProduct(
+    @Body() dto: CreateProductDto,
+    @UploadedFile() image: { buffer: Buffer }
+  ) {
     return await this.productsService.createProduct(dto, image)
   }
 

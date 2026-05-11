@@ -6,7 +6,7 @@ import { Product } from 'src/products/entities/product.entity'
 
 @Injectable()
 export class ExcelService {
-  async exportProducts(products: Product[]) {
+  exportProducts(products: Product[]) {
     const workbook = new ExcelJs.Workbook()
     const worksheet = workbook.addWorksheet('Products')
 
@@ -31,7 +31,7 @@ export class ExcelService {
     return workbook
   }
 
-  async exportCategories(categories: Category[]) {
+  exportCategories(categories: Category[]) {
     const workbook = new ExcelJs.Workbook()
     const worksheet = workbook.addWorksheet('Categories')
 
@@ -52,7 +52,7 @@ export class ExcelService {
     return workbook
   }
 
-  async exportOrders(orders: Order[]) {
+  exportOrders(orders: Order[]) {
     const workbook = new ExcelJs.Workbook()
     const worksheet = workbook.addWorksheet('Orders')
 

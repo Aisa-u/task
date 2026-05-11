@@ -27,12 +27,14 @@ import { DataSource } from 'typeorm'
         synchronize: true
       }),
       inject: [ConfigService],
-      async dataSourceFactory(options) {
+      dataSourceFactory(options) {
         if (!options) {
           throw new Error('Invalid options passed')
         }
 
-        return addTransactionalDataSource(new DataSource(options))
+        return Promise.resolve(
+          addTransactionalDataSource(new DataSource(options))
+        )
       }
     }),
 

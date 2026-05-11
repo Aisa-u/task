@@ -3,9 +3,13 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as uuid from 'uuid'
 
+interface FileUpload {
+  buffer: Buffer
+}
+
 @Injectable()
 export class FilesService {
-  async createFile(file): Promise<string> {
+  createFile(file: FileUpload): string {
     try {
       const fileName = uuid.v4() + '.jpg'
       const filePath = path.resolve(__dirname, '..', 'static')
@@ -17,7 +21,7 @@ export class FilesService {
       fs.writeFileSync(path.join(filePath, fileName), file.buffer)
 
       return fileName
-    } catch (e) {
+    } catch {
       throw new HttpException(
         'Произошла ошибка',
         HttpStatus.INTERNAL_SERVER_ERROR

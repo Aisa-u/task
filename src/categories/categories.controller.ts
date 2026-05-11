@@ -31,7 +31,7 @@ export class CategoriesController {
   async exportCategories(@Res() res: express.Response) {
     const categories = await this.categoriesService.getAllCategories()
 
-    const workbook = await this.excelService.exportCategories(categories)
+    const workbook = this.excelService.exportCategories(categories)
 
     res.setHeader(
       'Content-Type',
